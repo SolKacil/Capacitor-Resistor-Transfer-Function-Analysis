@@ -2,6 +2,14 @@
 
 Este repositorio contiene un script de MATLAB diseñado para modelar, simular y analizar el comportamiento dinámico de un circuito eléctrico **Resistencia-Capacitor (RC)** de primer orden. El enfoque principal es validar la relación entre los parámetros físicos del circuito y su respuesta en el tiempo.
 
+<div align="center">
+  <h4>Captura del Osciloscopio Digital</h4>
+  <img src="CircuitoRC.png" width="400">
+  <br>
+  <p><i>Respuesta temporal medida en Proteus, validando el modelo de primer orden.</i></p>
+</div>
+
+
 ## 1. Fundamentación Teórica: Sistemas de Primer Orden
 
 Un sistema de primer orden es aquel cuya dinámica está descrita por una ecuación diferencial lineal de primer grado. En ingeniería de control, estos sistemas se caracterizan por una respuesta exponencial suave sin oscilaciones.
@@ -29,13 +37,6 @@ Se han definido los siguientes valores para la simulación, correspondientes a c
 * **Resistencia (R):** $10,000 \, \Omega$ (10 kΩ).
 * **Capacitor (C):** $0.000100 \, F$ (100 µF).
 * **Voltaje de Entrada (Escalón):** 5V.
-
-## 3. Implementación en MATLAB
-
-En esta sección se detalla el uso de comandos del **Control System Toolbox** para transformar los parámetros físicos de resistencia y capacitancia en un modelo matemático ejecutable.
-
-### Configuración de Variables y Constantes
-El script inicia definiendo los valores comerciales de los componentes. Se utiliza notación decimal para la capacitancia para asegurar la precisión en los cálculos de la constante de tiempo $\tau$.
 
 ## 3. Implementación en MATLAB
 En esta sección se detalla el uso de comandos especializados para transformar los parámetros físicos de resistencia y capacitancia en un modelo matemático ejecutable.
@@ -98,3 +99,35 @@ Basado en los valores físicos de los componentes ($R = 10k\Omega$ y $C = 100\mu
     * La simulación muestra que en la marca de los **5.0s**, el capacitor alcanza **4.96V** (99.3% de la entrada), lo que indica que el sistema ha entrado formalmente en su estado estacionario.
 3.  **Estabilidad del Sistema:**
     * La ausencia de una parte imaginaria en el polo ($s = -1$) confirma que la respuesta es puramente exponencial y carece de oscilaciones, característica fundamental de los sistemas de primer orden.
+
+## 5. Validación mediante Simulación en Proteus
+
+Para corroborar los resultados obtenidos en MATLAB, se realizó una simulación de hardware virtual en Proteus, permitiendo observar el comportamiento del circuito en un entorno cercano a la implementación física.
+
+### Configuración del Circuito
+El montaje en Proteus se realizó utilizando componentes con los mismos valores nominales que el modelo matemático:
+
+* **Fuente de Alimentación (BAT1):** Configurada a 5V DC para representar la entrada escalón.
+* **Interruptor (SW1):** Un conmutador SPDT para controlar el inicio de la carga del capacitor.
+* **Etapa RC:** Resistencia de 10kΩ en serie con un capacitor electrolítico de 100µF.
+* **Instrumentación:** Se conectó un osciloscopio digital al nodo compartido entre la resistencia y el capacitor para medir el voltaje de salida $V_c(t)$.
+
+<div align="center">
+  <h4>Esquemático del Circuito RC</h4>
+  <img src="SimulacionRC_Proteus.png" width="500">
+  <br>
+  <p><i>Conexión de los componentes y el osciloscopio para la medición de la carga.</i></p>
+</div>
+
+### Respuesta en el Osciloscopio
+Al accionar el interruptor, el osciloscopio muestra la curva de carga característica del capacitor:
+
+1. **Comportamiento Transitorio:** Se observa una curva exponencial que inicia en 0V y asciende suavemente hacia el valor de la fuente.
+2. **Validación de Tiempos:** La escala horizontal del osciloscopio permite verificar que el sistema alcanza su estado estacionario aproximadamente a los 5 segundos, coincidiendo con el tiempo de establecimiento $5\tau$ calculado previamente.
+
+<div align="center">
+  <h4>Captura del Osciloscopio Digital</h4>
+  <img src="SimulacionRC_respuesta.png" width="500">
+  <br>
+  <p><i>Respuesta temporal medida en Proteus, validando el modelo de primer orden.</i></p>
+</div>
