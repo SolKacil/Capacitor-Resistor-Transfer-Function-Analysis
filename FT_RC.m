@@ -32,7 +32,7 @@ l_zero = findall(gca, 'Tag', 'PZ_Zero');
 set(l_pole, 'MarkerSize', 15, 'LineWidth', 2); % Polos más grandes y gruesos
 set(l_zero, 'MarkerSize', 15, 'LineWidth', 2); % Ceros más grandes y gruesos
 grid on;
-title('Mapa de Polos y Ceros (2do Orden)');
+title('Mapa de Polos y Ceros (1er Orden RC)');
 
 figure;
 % Datos de salida (y) y tiempo (t) de la función de transferencia H
