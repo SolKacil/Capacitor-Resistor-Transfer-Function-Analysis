@@ -26,7 +26,7 @@ Para este circuito RC, la función de transferencia se define como:
 $$H(s) = \frac{1}{RCs + 1}$$
 
 ### Ecuación de la Respuesta en el Tiempo
-Ante una entrada escalón de amplitud $A$, la respuesta temporal $y(t)$ es:
+Si se aplica la transformada de Laplace inversa a la función de transferencia, se obtiene la solución en el dominio del tiempo. Al aplicar una entrada escalón de amplitud $A$ al sistema, la respuesta temporal $y(t)$ es:
 
 $$y(t) = A(1 - e^{-t/\tau})$$
 
