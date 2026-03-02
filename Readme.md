@@ -1,7 +1,7 @@
 # Análisis de un Circuito RC: Función de Transferencia
 
-Este repositorio contiene un script de MATLAB diseñado para modelar, simular y analizar el comportamiento dinámico de un circuito eléctrico **Resistencia-Capacitor (RC)** de primer orden mediante su función de transferencia. 
-También contiene la simulación en Proteus mediante el archivo RC.pdsprj y la implementación de código en Arduino para la adquisición de datos del sistema fisico y la comparación con el modelo teórico en el dominio del tiempo. 
+Este repositorio contiene un script de MATLAB **FT_RC** diseñado para modelar, simular y analizar el comportamiento dinámico de un circuito eléctrico **Resistencia-Capacitor (RC)** de primer orden mediante su función de transferencia. 
+También contiene la simulación en Proteus mediante el archivo **RC.pdsprj** y la implementación de código en Arduino **RC_Arduino.ino** para la adquisición de datos del sistema fisico y la comparación con el modelo teórico en el dominio del tiempo. 
 El enfoque principal es validar la relación entre los parámetros físicos del circuito y su respuesta en el tiempo.
 
 <div align="center">
