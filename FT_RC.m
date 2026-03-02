@@ -5,8 +5,8 @@ close all
 %Define un vector tiempo (opcional para este caso)
 t = 0:0.01:40;
 %Definir parametros de resistencia y capacitor
-R = 1000;
-C = 0.000470;
+R = 10000;
+C = 0.000100;
 % Definir el sistema para su FT
 num = [1]; 
 den = [R*C 1]; 

@@ -1,6 +1,8 @@
 # Análisis de un Circuito RC: Función de Transferencia
 
-Este repositorio contiene un script de MATLAB diseñado para modelar, simular y analizar el comportamiento dinámico de un circuito eléctrico **Resistencia-Capacitor (RC)** de primer orden. El enfoque principal es validar la relación entre los parámetros físicos del circuito y su respuesta en el tiempo.
+Este repositorio contiene un script de MATLAB diseñado para modelar, simular y analizar el comportamiento dinámico de un circuito eléctrico **Resistencia-Capacitor (RC)** de primer orden mediante su función de transferencia. 
+También contiene la simulación en Proteus mediante el archivo RC.pdsprj y la implementación de código en Arduino para la adquisición de datos del sistema fisico y la comparación con el modelo teórico en el dominio del tiempo. 
+El enfoque principal es validar la relación entre los parámetros físicos del circuito y su respuesta en el tiempo.
 
 <div align="center">
   <img src="CircuitoRC.png" width="200">
@@ -132,7 +134,53 @@ Al accionar el interruptor, el osciloscopio muestra la curva de carga caracterí
 </div>
 
 ---
-## 6. Ejercicio para practicar
+## 6. Implementación Física y Adquisición de Datos (Arduino)
+
+Para llevar el análisis del dominio teórico al práctico, se implementó un sistema de adquisición de datos en tiempo real utilizando Arduino DUE. Esto permite comparar la curva matemática ideal frente al comportamiento físico real del capacitor.
+
+### ⚠️ Nota de Compatibilidad de Hardware 
+El código de adquisición de datos está optimizado específicamente para **Arduino Due** (que opera a **3.3V** y cuenta con una resolución nativa de **12 bits**). Si decides utilizar una placa diferente, es imperativo ajustar las siguientes líneas en el `setup` y `loop` de tu programa:
+
+#### Para Arduino Uno / Nano / Mega:
+* **Voltaje de Referencia:** Cambiar la constante `Vin_Max` de `3.3` a **`5.0`**.
+* **Resolución del ADC:** Cambiar el divisor de la resolución a **10 bits** (reemplazar `4095.0` por **`1023.0`**).
+* **Configuración del Setup:** Eliminar o comentar la línea `analogReadResolution(12);`, ya que estas placas operan con una resolución fija y no soportan dicho comando.
+
+### Configuración del Sistema de Medición usando Arduino DUE
+* **Entrada Analógica:** Se utiliza el pin `A1` para monitorear el voltaje en el nodo del capacitor ($V_c$).
+* **Resolución:** Configurada a **12 bits** (0-4095) para obtener una mayor precisión en la curva de carga.
+* **Sincronización:** El firmware detecta el inicio de la carga para resetear el cronómetro interno ($t=0$) y alinear las gráficas.
+
+### Código de Instrumentación (Arduino)
+
+El siguiente fragmento de código calcula el modelo teórico en cada iteración y lo envía, junto con la lectura real, a través del puerto serial:
+
+```cpp
+// --- Cálculo y Comparación en Tiempo Real ---
+void loop() {
+  int lecturaADC = analogRead(A1);
+  float vReal = (lecturaADC / 4095.0) * Vin_Max; // Conversión a Voltaje
+  float t = (millis() - tiempoReferencia) / 1000.0; // Tiempo en segundos
+
+  if (estadoCargando) {
+    // Modelo matemático de la carga: Vc = Vin * (1 - e^-t/tau)
+    vTeorico = Vin_Max * (1.0 - exp(-t / tau)); 
+  } else {
+    vTeorico = 0; 
+  }
+
+  // Formato para Serial Plotter (Setpoint, Teórico, Real)
+  Serial.print(Vin_Max); 
+  Serial.print(",");
+  Serial.print(vTeorico); 
+  Serial.print(",");
+  Serial.println(vReal); 
+
+  delay(100); // Muestreo cada 100ms
+}
+```
+---
+## 7. Ejercicio para practicar
 
 Para fortalecer el dominio sobre los sistemas de primer orden, se propone realizar el análisis completo de los siguientes dos casos de estudio. El objetivo es comparar los resultados obtenidos mediante el modelo matemático en **MATLAB**, la simulación de hardware en **Proteus** y la **implementación física** en laboratorio.
 
@@ -152,5 +200,3 @@ Para fortalecer el dominio sobre los sistemas de primer orden, se propone realiz
 * ¿Cómo cambió la ubicación del polo en el plano $s$ al disminuir la resistencia en el Caso B?
 * ¿Hubo diferencias significativas entre el tiempo de establecimiento teórico y el medido físicamente? ¿A qué crees que se deba (tolerancia de componentes, resistencia de cables, etc.)?
 
----
-**Guía:** Compara tus gráficas con las de este repositorio para validar los resultados.
