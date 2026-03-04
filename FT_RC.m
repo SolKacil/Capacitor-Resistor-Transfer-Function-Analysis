@@ -36,7 +36,7 @@ title('Mapa de Polos y Ceros (1er Orden RC)');
 
 figure;
 % Datos de salida (y) y tiempo (t) de la función de transferencia H
-[y, t] = step(t,5*H); 
+[y, t] = step(t,3.3*H); 
 plot(t, y, 'LineWidth', 2.5);
 grid on;
 title('Respuesta al Escalón');

@@ -179,6 +179,15 @@ void loop() {
   delay(100); // Muestreo cada 100ms
 }
 ```
+En la siguiente figura se muestra la respuesta del sistema real mediante la adquisición de los datos con la tarjeta Arduino y se compara con el modelo teórico en función del tiempo. En el monitor serial se imprime el tiempo (tercera columna), este se reinicia cada vez que el capacitor se comienza a cargar. La cuarta columna muestra el valor teórico y la quinta columna muestra el valor real del voltaje del capacitor..
+
+<div align="center">
+  <h4>Datos adquiridos con la tarjeta Arduino</h4>
+  <img src="RespuestaRCreal.png" width="500">
+  <br>
+  <p><i>Comparación sistema real vs modelo teórico.</i></p>
+</div>
+
 ---
 ## 7. Ejercicio para practicar
 
